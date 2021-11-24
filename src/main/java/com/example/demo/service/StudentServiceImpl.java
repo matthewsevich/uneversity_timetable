@@ -22,9 +22,9 @@ public class StudentServiceImpl implements StudentService {
     private final CycleAvoidingMappingContext context;
 
 
-    public Student saveStudent(StudentDto dto) {
+    public StudentDto saveStudent(StudentDto dto) {
         Student student = studentMapper.toEntity(dto, context);
-        return repository.save(student);
+        return studentMapper.toDto(repository.save(student), context);
     }
 
     @Override
