@@ -42,7 +42,7 @@ public class GroupController {
         return ResponseEntity.ok(groupService.getAll());
     }
 
-    @PostMapping()
+    @PostMapping("/create")
     public ResponseEntity<GroupDto> createGroup(@RequestBody GroupDto dto) {
         return ResponseEntity.ok(groupService.saveGroup(dto));
     }

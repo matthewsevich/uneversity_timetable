@@ -59,7 +59,7 @@ public class GroupServiceImpl implements GroupService {
     public GroupDto update(GroupDto dto, Long id) {
         log.info("calling update group");
         Group group1 = groupRepository.findById(id).orElseThrow(() -> new NoSuchEntityException("no group found to update"));
-        log.info("group found - {0}", group1.toString());
+        log.info("group found - {1}", group1.toString());
         Group group = groupMapper.toEntity(dto, context);
         group.setId(id);
         groupRepository.save(group);

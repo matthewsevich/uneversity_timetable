@@ -26,13 +26,11 @@ public class Group implements Serializable {
     private String groupNumber;
 
     @OneToMany(mappedBy = "group", cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH}, fetch = FetchType.LAZY)
-//    @JsonIgnoreProperties("group")
     private List<Student> students;
 
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
     @JoinTable(name = "lesson_students_group",
             joinColumns = {@JoinColumn(name = "students_group_id", nullable = false)},
             inverseJoinColumns = {@JoinColumn(name = "lesson_id", nullable = false)})
-//    @JsonIgnoreProperties("groups")
     private List<Lesson> lessons;
 }

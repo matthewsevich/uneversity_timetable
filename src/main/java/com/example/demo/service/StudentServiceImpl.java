@@ -3,9 +3,11 @@ package com.example.demo.service;
 import com.example.demo.converter.CycleAvoidingMappingContext;
 import com.example.demo.converter.StudentMapper;
 import com.example.demo.dto.StudentDto;
+import com.example.demo.exception.NoSuchEntityException;
 import com.example.demo.model.Student;
 import com.example.demo.repository.StudentRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class StudentServiceImpl implements StudentService {
@@ -53,14 +56,12 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public ResponseEntity<StudentDto> update(StudentDto dto, Long id) {
-        Optional<Student> studentOptional = repository.findById(id);
-        if (!studentOptional.isPresent()) {
-            return ResponseEntity.notFound().build();
-        }
-        Student student = studentMapper.toEntity(dto,context);
-        student.setId(id);
-        repository.save(student);
-        return ResponseEntity.status(200).build();
+    public StudentDto update(StudentDto dto, Long id) {
+        Student student = repository.findById(id).orElseThrow(() -> new NoSuchEntityException("no student found"));
+        log.info("student found {}", student.toString());
+        Student entity = studentMapper.toEntity(dto, context);
+        entity.setId(id);
+        return studentMapper.toDto(repository.save(entity), context);
+
     }
 }

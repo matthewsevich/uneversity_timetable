@@ -32,7 +32,6 @@ public class Lesson implements Serializable {
     @JoinTable(name = "lesson_students_group",
             joinColumns = {@JoinColumn(name = "lesson_id", nullable = false)},
             inverseJoinColumns = {@JoinColumn(name = "students_group_id", nullable = false)})
-//    @JsonIgnoreProperties("lessons")
     private List<Group> groups;
 
     @ManyToOne(cascade = {PERSIST, MERGE})

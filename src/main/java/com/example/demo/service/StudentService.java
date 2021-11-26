@@ -13,6 +13,6 @@ public interface StudentService {
 
     void deleteStudent(Long id);
     StudentDto getStudent(Long id);
-    ResponseEntity<StudentDto> update(StudentDto dto, Long id);
+    StudentDto update(StudentDto dto, Long id);
 
 }

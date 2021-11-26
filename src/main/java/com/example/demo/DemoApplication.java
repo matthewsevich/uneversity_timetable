@@ -11,23 +11,4 @@ public class DemoApplication {
     }
 
 
-//
-//    private final Logger logger = LoggerFactory.getLogger(DemoApplication.class);
-//    @Autowired
-//    private CustomerRepository repository;
-//
-//    @EventListener(ApplicationReadyEvent.class)
-//    public void runAfterStartup() {
-//        List allCustomers = this.repository.findAll();
-//        logger.info("Number of customers: " + allCustomers.size());
-//
-//        Customer newCustomer = new Customer();
-//        newCustomer.setFirstName("John");
-//        newCustomer.setLastName("Doe");
-//        logger.info("Saving new customer...");
-//        this.repository.save(newCustomer);
-//
-//        allCustomers = this.repository.findAll();
-//        logger.info("Number of customers: " + allCustomers.size());
-//    }
 }

@@ -27,18 +27,18 @@ public class StudentController {
     }
 
 
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/{id}/delete")
     public void delStudents(@PathVariable Long id) {
         service.deleteStudent(id);
     }
 
     @GetMapping("/{id}")
-    public StudentDto getStudentById(@PathVariable Long id) {
-        return service.getStudent(id);
+    public ResponseEntity<StudentDto> getStudentById(@PathVariable Long id) {
+        return ResponseEntity.ok(service.getStudent(id));
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/{id}/update")
     public ResponseEntity<StudentDto> update(@RequestBody StudentDto dto, @PathVariable Long id) {
-        return service.update(dto, id);
+        return ResponseEntity.ok(service.update(dto, id));
     }
 }
