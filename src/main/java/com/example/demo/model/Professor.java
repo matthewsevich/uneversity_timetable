@@ -1,22 +1,22 @@
 package com.example.demo.model;
 
 
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Table(name = "professor")
-@Getter
-@Setter
-@RequiredArgsConstructor
-public class Professor {
+@Data
+public class Professor implements Serializable {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(generator = "professor_id", strategy = GenerationType.SEQUENCE)
+    @SequenceGenerator(name = "professor_id", sequenceName = "prof_seq", allocationSize = 1)
     @Column(name = "professor_id")
     private Long id;
 
@@ -27,5 +27,13 @@ public class Professor {
     private String lastName;
 
     @OneToMany(mappedBy = "professor", cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH}, fetch = FetchType.LAZY)
+    @EqualsAndHashCode.Exclude
     private List<Lesson> lessons;
+
+    public List<Lesson> getLessons() {
+        if (lessons == null) {
+            return new ArrayList<>();
+        }
+        return lessons;
+    }
 }

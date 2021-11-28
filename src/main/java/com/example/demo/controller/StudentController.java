@@ -2,7 +2,6 @@ package com.example.demo.controller;
 
 import com.example.demo.dto.StudentDto;
 import com.example.demo.service.StudentService;
-import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,7 +20,7 @@ public class StudentController {
         return ResponseEntity.ok(service.saveStudent(student));
     }
 
-    @GetMapping()
+    @GetMapping("/")
     public List<StudentDto> getAllStudents() {
         return service.getAllStudents();
     }

@@ -1,26 +1,28 @@
 package com.example.demo.controller;
 
+import com.example.demo.dto.LessonDto;
 import com.example.demo.dto.ProfessorDto;
 import com.example.demo.service.ProfessorService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
-@RequiredArgsConstructor
 @RestController
+@RequiredArgsConstructor
 @RequestMapping(value = "/api/professors", produces = "application/json; charset=UTF-8")
 public class ProfessorController {
 
     private final ProfessorService professorService;
 
     @PostMapping("/create")
-    public ResponseEntity<ProfessorDto> create(@RequestBody ProfessorDto professorDto) {
-        return ResponseEntity.ok(professorService.create(professorDto));
+    public ProfessorDto create(@RequestBody @Valid ProfessorDto professorDto) {
+        return (professorService.create(professorDto));
     }
 
-    @GetMapping()
+    @GetMapping("/")
     public ResponseEntity<List<ProfessorDto>> getAllProfessors() {
         return ResponseEntity.ok(professorService.findAll());
     }
@@ -36,7 +38,12 @@ public class ProfessorController {
     }
 
     @DeleteMapping("/{id}/delete")
-    public void delete(@PathVariable Long id){
+    public void delete(@PathVariable Long id) {
         professorService.delete(id);
+    }
+
+    @PostMapping("/{id}/addLesson")
+    public ResponseEntity<ProfessorDto> addLesson(@PathVariable Long id, @RequestBody LessonDto dto) {
+        return ResponseEntity.ok(professorService.addLesson(id, dto));
     }
 }

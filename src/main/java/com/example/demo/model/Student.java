@@ -1,8 +1,6 @@
 package com.example.demo.model;
 
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
+import lombok.Data;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -12,13 +10,12 @@ import static javax.persistence.CascadeType.PERSIST;
 
 @Entity
 @Table(name = "student")
-@Getter
-@Setter
-@RequiredArgsConstructor
+@Data
 public class Student implements Serializable {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(generator = "student_id", strategy = GenerationType.SEQUENCE)
+    @SequenceGenerator(name = "student_id", sequenceName = "stud_seq", allocationSize = 1)
     @Column(name = "student_id")
     private Long id;
 
@@ -30,8 +27,6 @@ public class Student implements Serializable {
 
     @ManyToOne(cascade = {PERSIST, MERGE})
     @JoinColumn(name = "students_group_id", referencedColumnName = "students_group_id")
-//    @JsonIgnoreProperties("students")
     private Group group;
-
 
 }

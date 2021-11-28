@@ -2,16 +2,16 @@ package com.example.demo.controller;
 
 import com.example.demo.dto.LessonDto;
 import com.example.demo.service.LessonService;
-import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.websocket.server.PathParam;
 import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping(value = "/api/groups", produces = "application/json; charset=UTF-8")
+@RequestMapping(value = "/api/lessons")
 public class LessonController {
 
     private final LessonService lessonService;
@@ -21,12 +21,12 @@ public class LessonController {
         return ResponseEntity.ok(lessonService.saveLesson(lesson));
     }
 
-    @GetMapping()
+    @GetMapping("/")
     public List<LessonDto> getAllLessons() {
         return lessonService.getAllLessons();
     }
 
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/{id}/delete")
     public void delLesson(@PathVariable Long id) {
         lessonService.deleteLesson(id);
     }
@@ -36,8 +36,13 @@ public class LessonController {
         return ResponseEntity.ok(lessonService.findById(id));
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<LessonDto> update(@RequestBody LessonDto dto, @PathVariable Long id) {
+    @PutMapping("/{id}/update")
+    public ResponseEntity<LessonDto> update(LessonDto dto, @PathVariable Long id) {
         return ResponseEntity.ok(lessonService.updateLesson(dto, id));
+    }
+
+    @GetMapping("/{id}/{day}")
+    public ResponseEntity<List<LessonDto>> getStudentsLessonsByDay(@PathParam("id") Long id, @PathParam("day") Integer day) {
+        return ResponseEntity.ok(lessonService.getStudentsLessons(id, day));
     }
 }

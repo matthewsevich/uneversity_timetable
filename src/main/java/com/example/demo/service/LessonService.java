@@ -15,4 +15,6 @@ public interface LessonService {
     void deleteLesson(Long id);
 
     LessonDto saveLesson(LessonDto dto);
+
+    List<LessonDto> getStudentsLessons(Long id, Integer day);
 }
