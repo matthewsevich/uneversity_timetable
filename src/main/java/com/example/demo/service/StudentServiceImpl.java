@@ -25,7 +25,9 @@ public class StudentServiceImpl implements StudentService {
     public StudentDto saveStudent(StudentDto dto) {
         log.info("calling save student");
         Student student = converter.toEntity(dto);
-        student.setGroup(groupRepository.findById(dto.getGroupId()).orElseThrow(() -> new NoSuchEntityException("no such group found")));
+        if (student.getGroup() != null) {
+            student.setGroup(groupRepository.findById(dto.getGroupId()).orElseThrow(() -> new NoSuchEntityException("no such group found")));
+        }
         return converter.toDto(repository.save(student));
     }
 
@@ -55,7 +57,9 @@ public class StudentServiceImpl implements StudentService {
         Student student = repository.findById(id).orElseThrow(() -> new NoSuchEntityException("no student found"));
         log.info("student found {}", student.toString());
         Student entity = converter.toEntity(dto);
-        entity.setGroup(groupRepository.findById(dto.getGroupId()).orElseThrow(() -> new NoSuchEntityException("no such group found")));
+        if (dto.getGroupId() != null) {
+            entity.setGroup(groupRepository.findById(dto.getGroupId()).orElseThrow(() -> new NoSuchEntityException("no such group found")));
+        }
         entity.setId(id);
         return converter.toDto(repository.save(entity));
 

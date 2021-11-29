@@ -35,8 +35,10 @@ public class ProfessorServiceImpl implements ProfessorService {
 
     private ProfessorDto fillAndSaveEntity(ProfessorDto dto, Professor entity) {
         List<Long> ids = dto.getLessonIds();
-        List<Lesson> allById = lessonRepository.findAllById(ids);
-        entity.setLessons(allById);
+        if (ids != null) {
+            List<Lesson> allById = lessonRepository.findAllById(ids);
+            entity.setLessons(allById);
+        }
         return professorConverter.toDto(repository.save(entity));
     }
 

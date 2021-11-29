@@ -11,6 +11,9 @@ import java.util.stream.Collectors;
 public class ProfessorConverter {
 
     public ProfessorDto toDto(Professor entity) {
+        if (entity == null) {
+            return null;
+        }
         ProfessorDto dto = new ProfessorDto();
         dto.setId(entity.getId());
         dto.setFirstName(entity.getFirstName());

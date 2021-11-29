@@ -11,6 +11,9 @@ import java.util.stream.Collectors;
 public class LessonConverter {
 
     public LessonDto toDto(Lesson entity) {
+        if (entity == null) {
+            return null;
+        }
         LessonDto dto = new LessonDto();
         dto.setId(entity.getId());
         dto.setDay(entity.getDay());

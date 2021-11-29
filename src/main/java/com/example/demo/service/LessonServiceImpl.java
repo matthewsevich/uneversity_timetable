@@ -54,8 +54,13 @@ public class LessonServiceImpl implements LessonService {
 
     private LessonDto fillEntityAndSave(LessonDto dto) {
         Lesson entity = converter.toEntity(dto);
-        entity.setProfessor(professorRepository.findById(dto.getProfessorId()).orElseThrow(() -> new NoSuchEntityException("no such professor found")));
-        entity.setGroups(groupRepository.findAllById(dto.getGroupsIds()));
+        if (dto.getProfessorId() != null) {
+            entity.setProfessor(professorRepository.findById(dto.getProfessorId()).orElseThrow(() -> new NoSuchEntityException("no such professor found")));
+        }
+        if (dto.getGroupsIds() != null) {
+            entity.setGroups(groupRepository.findAllById(dto.getGroupsIds()));
+        }
+        entity.setId(dto.getId());
         Lesson save = repository.save(entity);
         return converter.toDto(save);
     }

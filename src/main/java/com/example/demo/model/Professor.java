@@ -36,4 +36,15 @@ public class Professor implements Serializable {
         }
         return lessons;
     }
+
+    public void setLessons(List<Lesson> lessons) {
+        this.lessons = lessons;
+        if (lessons != null) {
+            for (Lesson lesson : lessons) {
+                if (lesson.getProfessor() != this) {
+                    lesson.setProfessor(this);
+                }
+            }
+        }
+    }
 }

@@ -4,6 +4,7 @@ import com.example.demo.converter.GroupConverter;
 import com.example.demo.dto.GroupDto;
 import com.example.demo.exception.NoSuchEntityException;
 import com.example.demo.model.Group;
+import com.example.demo.model.Lesson;
 import com.example.demo.repository.GroupRepository;
 import com.example.demo.repository.LessonRepository;
 import com.example.demo.repository.StudentRepository;
@@ -11,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -63,8 +65,12 @@ public class GroupServiceImpl implements GroupService {
     private GroupDto fillAndSaveEntity(GroupDto dto, Group entity) {
         List<Long> lessonsIds = dto.getLessonsIds();
         List<Long> studentsIds = dto.getStudentsIds();
-        entity.setStudents(studentRepository.findAllById(studentsIds));
-        entity.setLessons(lessonRepository.findAllById(lessonsIds));
+        if (dto.getStudentsIds() != null) {
+            entity.setStudents(studentRepository.findAllById(studentsIds));
+        }
+        if (dto.getLessonsIds() != null) {
+            entity.setLessons(lessonRepository.findAllById(lessonsIds));
+        }
         return groupConverter.toDto(groupRepository.save(entity));
     }
 
@@ -72,5 +78,15 @@ public class GroupServiceImpl implements GroupService {
     public void deleteGroup(Long id) {
         log.info("call delete group with id {}", id);
         groupRepository.deleteById(id);
+    }
+
+    @Override
+    @Transactional
+    public void addLessonToGroup(Long id, Long lessonId) {
+        Group group = groupRepository.findById(id).orElseThrow(() -> new NoSuchEntityException("No group found"));
+        Lesson lesson = lessonRepository.findById(lessonId).orElseThrow(() -> new NoSuchEntityException("No lesson found"));
+        group.getLessons().add(lesson);
+        lesson.getGroups().add(group);
+        groupRepository.save(group);
     }
 }

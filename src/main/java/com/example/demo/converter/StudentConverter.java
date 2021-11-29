@@ -8,6 +8,9 @@ import org.springframework.stereotype.Component;
 public class StudentConverter {
 
     public StudentDto toDto(Student entity) {
+        if (entity == null) {
+            return null;
+        }
         StudentDto dto = new StudentDto();
         dto.setId(entity.getId());
         dto.setFirstName(entity.getFirstName());
@@ -20,8 +23,7 @@ public class StudentConverter {
 
     public Student toEntity(StudentDto dto) {
         Student entity = new Student();
-        entity.setId(dto.getId());
-        entity.setLastName(dto.getFirstName());
+        entity.setLastName(dto.getLastName());
         entity.setFirstName(dto.getFirstName());
         return entity;
     }

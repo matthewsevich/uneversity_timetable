@@ -15,4 +15,6 @@ public interface GroupService {
     GroupDto update(GroupDto dto, Long id);
 
     void deleteGroup(Long id);
+
+    void addLessonToGroup(Long id, Long lessonId);
 }

@@ -13,6 +13,9 @@ import java.util.stream.Collectors;
 public class GroupConverter {
 
     public GroupDto toDto(Group entity) {
+        if (entity == null) {
+            return null;
+        }
         GroupDto dto = new GroupDto();
         dto.setId(entity.getId());
         dto.setGroupNumber(entity.getGroupNumber());

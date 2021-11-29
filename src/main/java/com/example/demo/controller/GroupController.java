@@ -40,4 +40,8 @@ public class GroupController {
         groupService.deleteGroup(id);
     }
 
+    @PostMapping("/{id}/{lessonId}")
+    public void addLessonToGroup(@PathVariable("id") Long id, @PathVariable("lessonId") Long lessonId) {
+        groupService.addLessonToGroup(id, lessonId);
+    }
 }
