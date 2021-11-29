@@ -105,11 +105,13 @@ class LessonServiceImplTest {
     @Test
     void getStudentsLessons() {
         saveStudentWithLessons();
-        List<LessonDto> dayOne = service.getStudentsLessons(1L, 1);
+        assertEquals(1, studentRepository.findAll().size());
+        Long id = studentRepository.findAll().iterator().next().getId();
+        List<LessonDto> dayOne = service.getStudentsLessons(id, 1);
         assertEquals(1, dayOne.size());
-        List<LessonDto> dayTwo = service.getStudentsLessons(1L, 2);
+        List<LessonDto> dayTwo = service.getStudentsLessons(id, 2);
         assertEquals(1, dayTwo.size());
-        List<LessonDto> dayThree = service.getStudentsLessons(1L, 3);
+        List<LessonDto> dayThree = service.getStudentsLessons(id, 3);
         assertEquals(1, dayThree.size());
     }
 
