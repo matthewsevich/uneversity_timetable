@@ -72,7 +72,7 @@ class LessonServiceImplTest {
     void updateLesson() {
         LessonDto dto = createDto();
         repository.save(converter.toEntity(dto));
-        assertEquals(repository.findAll().size(), 1);
+        assertEquals(1, repository.findAll().size());
         Lesson lesson = repository.findAll().iterator().next();
         assertEquals(lesson.getTitle(), dto.getTitle());
         dto.setTitle("math");
@@ -86,10 +86,10 @@ class LessonServiceImplTest {
         LessonDto dto = createDto();
         assertEquals(0L, repository.findAll().size());
         repository.save(converter.toEntity(dto));
-        assertEquals(repository.findAll().size(), 1L);
+        assertEquals(1L, repository.findAll().size());
         Long id = repository.findAll().iterator().next().getId();
         service.deleteLesson(id);
-        assertEquals(repository.findAll().size(), 0);
+        assertEquals(0, repository.findAll().size());
     }
 
     @Test
