@@ -80,15 +80,13 @@ class GroupServiceImplTest {
         service.saveGroup(dto);
         Group next = repository.findAll().iterator().next();
         assertEquals(next.getGroupNumber(), dto.getGroupNumber());
-//        Mockito.verify(repository, Mockito.times(1))
-//                .save(converter.toEntity(dto));
     }
 
     @Test
     void update() {
         GroupDto dto = createGroupDto();
         repository.save(converter.toEntity(dto));
-        assertEquals(repository.findAll().size(), 1L);
+        assertEquals(1L, repository.findAll().size());
         Group next = repository.findAll().iterator().next();
         assertEquals(next.getGroupNumber(), dto.getGroupNumber());
         dto.setGroupNumber("1337");
@@ -102,10 +100,10 @@ class GroupServiceImplTest {
         GroupDto dto = createGroupDto();
         assertEquals(0L, repository.findAll().size());
         repository.save(converter.toEntity(dto));
-        assertEquals(repository.findAll().size(), 1L);
+        assertEquals(1L, repository.findAll().size());
         Long id = repository.findAll().iterator().next().getId();
         service.deleteGroup(id);
-        assertEquals(repository.findAll().size(), 0);
+        assertEquals(0, repository.findAll().size());
     }
 
     private GroupDto createGroupDto() {
